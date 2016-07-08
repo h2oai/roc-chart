@@ -351,7 +351,7 @@ module.exports = {
       'font-family': 'Open Sans'
     });
 
-  d3.selectAll('.curve path')
+  d3.selectAll('path.curve')
     .style({
       'stroke-width': 3,
       'fill': 'none',
