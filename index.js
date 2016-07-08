@@ -17,6 +17,8 @@ module.exports = {
     "animate": true
   }
 
+  console.log('options passed to rocChart.plot', options);
+
   //Put all of the options into a variable called cfg
   if('undefined' !== typeof options){
     for(var i in options){
@@ -36,7 +38,6 @@ module.exports = {
   })
 
   console.log("tprVariables", tprVariables);
-
 
   const interpolationMode = cfg["interpolationMode"];
   const fpr = cfg["fpr"];
