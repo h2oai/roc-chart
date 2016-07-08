@@ -343,6 +343,47 @@ module.exports = {
     }  
   }
 
+  // styles
+  d3.select('body')
+    .style({ 
+      'font-size': '12px', 
+      'font-family': 'Open Sans'
+    });
+
+  d3.selectAll('path')
+    .style({
+      'stroke-width': 3,
+      'fill': 'none',
+      'opacity': 0.7
+    });
+
+  d3.selectAll('.axis path')
+    .style({
+      fill: 'none',
+      stroke: 'grey',
+      'stroke-width': 2,
+      'shape-rendering': crispEdges,
+      opacity: 1
+    });
+
+  d3.selectAll('.axis line')
+    .style({
+      fill: 'none',
+      stroke: 'grey',
+      'stroke-width': 2,
+      'shape-rendering': crispEdges,
+      opacity: 1
+    });
+
+  d3.selectAll('.d3-tip')
+    .style({
+    'font-family': 'Verdana',
+    background: 'rgba(0, 0, 0, 0.8)',
+    padding: '8px',
+    color: 'white', 
+    'z-index': 5070
+  })
+
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
