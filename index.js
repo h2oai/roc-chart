@@ -362,7 +362,7 @@ module.exports = {
       fill: 'none',
       stroke: 'grey',
       'stroke-width': 2,
-      'shape-rendering': crispEdges,
+      'shape-rendering': 'crispEdges',
       opacity: 1
     });
 
@@ -371,7 +371,7 @@ module.exports = {
       fill: 'none',
       stroke: 'grey',
       'stroke-width': 2,
-      'shape-rendering': crispEdges,
+      'shape-rendering': 'crispEdges',
       opacity: 1
     });
 
