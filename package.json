@@ -1,0 +1,37 @@
+{
+  "name": "rocChart",
+  "version": "0.1.0",
+  "description": "a chart that plots receiver operating characteristic curves",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h2oai/vis-components.git"
+  },
+  "keywords": [
+    "roc",
+    "accuracy",
+    "model",
+    "d3",
+    "d3js",
+    "plot",
+    "chart",
+    "vis",
+    "viz"
+  ],
+  "author": "h2o.ai <micah@h2o.ai>",
+  "contributors": [{
+    "name": "@micahstubbs",
+    "email": "micah.stubbs@gmail.com"
+  }],
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/h2oai/vis-components/issues"
+  },
+  "homepage": "https://github.com/h2oai/vis-components#readme",
+  "dependencies": {
+    "d3": "^3.5.17"
+  }
+}
