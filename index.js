@@ -351,7 +351,7 @@ module.exports = {
       'font-family': 'Open Sans'
     });
 
-  d3.selectAll('path')
+  d3.selectAll('.curve path')
     .style({
       'stroke-width': 3,
       'fill': 'none',
@@ -379,7 +379,7 @@ module.exports = {
   d3.selectAll('.d3-tip')
     .style({
     'font-family': 'Verdana',
-    background: 'rgba(0, 0, 0, 0.8)',
+    background: rgba(0, 0, 0, 0.8),
     padding: '8px',
     color: 'white', 
     'z-index': 5070
