@@ -1,8 +1,8 @@
 {
-  "name": "rocChart",
-  "version": "0.1.0",
+  "name": "roc-chart",
+  "version": "0.1.1",
   "description": "a chart that plots receiver operating characteristic curves",
-  "main": "index.js",
+  "main": "./dist/bundle.js",
   "scripts": {
     "prepublish": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
