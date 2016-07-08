@@ -38,14 +38,15 @@ module.exports = {
   console.log("tprVariables", tprVariables);
 
 
-  var interpolationMode = cfg["interpolationMode"],
-      fpr = cfg["fpr"],
-      width = cfg["width"],
-      height = cfg["height"],
-      animate = cfg["animate"]
+  const interpolationMode = cfg["interpolationMode"];
+  const fpr = cfg["fpr"];
+  const width = cfg["width"];
+  const height = cfg["height"];
+  const animate = cfg["animate"];
+  const margin = cfg["margin"];
 
   var format = d3.format('.2');
-  var aucFormat = d3.format('.4r')
+  var aucFormat = d3.format('.4r');
   
   var x = d3.scale.linear().range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
