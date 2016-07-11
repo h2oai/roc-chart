@@ -23,6 +23,44 @@
     return areaGenerator(data);
   }
 
+  function drawArea (data, svg, height, tpr, fpr, x, y, fill) {
+    // draw the area under the ROC curves
+    svg.append('path')
+      .attr('class', 'area')
+      .attr('id', tpr + 'Area')
+      .style({
+        'fill': fill,
+        'opacity': 0
+      })
+      .attr('d', areaUnderCurve(data, height, tpr, fpr, x, y))
+  }
+
+  function drawCurve (data, svg, tpr, fpr, stroke, x, y, areaID, interpolationMode) {
+    // draw the ROC curves
+    svg.append('path')
+      .attr('class', 'curve')
+      .style('stroke', stroke)
+      .attr('d', curve(data, tpr, fpr, interpolationMode, x, y))
+      .on('mouseover', function(d) {
+        areaID = '#' + tpr + 'Area';
+        svg.select(areaID)
+          .style('opacity', .4)
+
+        var aucText = '.' + tpr + 'text'; 
+        svg.selectAll(aucText)
+          .style('opacity', .9)
+        })
+      .on('mouseout', function(){
+        areaID = '#' + tpr + 'Area';
+        svg.select(areaID)
+          .style('opacity', 0)
+
+        var aucText = '.' + tpr + 'text'; 
+        svg.selectAll(aucText)
+          .style('opacity', 0)
+      });
+  }
+
   // var d3 = require('d3');
 
   module.exports = {
@@ -146,7 +184,6 @@
         "y2": 0
       });
 
-
     // position the axis tick labels below the x-axis
     xAxisG.selectAll('.tick text')
       .attr('transform', 'translate(0,' + 25 + ')');
@@ -222,47 +259,6 @@
       })
 
     let areaID;
-    // draw the ROC curves
-    function drawCurve(data, tpr, stroke, x, y){
-
-      svg.append("path")
-        .attr("class", "curve")
-        .style("stroke", stroke)
-        .attr("d", curve(data, tpr, fpr, interpolationMode, x, y))
-        .on('mouseover', function(d) {
-
-          areaID = "#" + tpr + "Area";
-          svg.select(areaID)
-            .style("opacity", .4)
-
-          var aucText = "." + tpr + "text"; 
-          svg.selectAll(aucText)
-            .style("opacity", .9)
-        })
-        .on('mouseout', function(){
-          areaID = "#" + tpr + "Area";
-          svg.select(areaID)
-            .style("opacity", 0)
-
-          var aucText = "." + tpr + "text"; 
-          svg.selectAll(aucText)
-            .style("opacity", 0)
-
-
-        });
-    }
-
-    // draw the area under the ROC curves
-    function drawArea(data, tpr, fill) {
-      svg.append("path")
-        .attr("class", "area")
-        .attr("id", tpr + "Area")
-        .style({
-          "fill": fill,
-          "opacity": 0
-        })
-        .attr("d", areaUnderCurve(data, height, tpr, fpr, x, y))
-    }
 
     function drawAUCText(auc, tpr, label) {
 
@@ -308,8 +304,8 @@
       console.log('x scale', x);
       console.log('y scale', y);
       var tpr = d.name;
-      drawArea(data, tpr, color(i))
-      drawCurve(data, tpr, color(i), x, y);
+      drawArea(data, svg, height, tpr, fpr, x, y, color(i));
+      drawCurve(data, svg, tpr, fpr, color(i), x, y, areaID, interpolationMode); 
       drawAUCText(d.auc, tpr, d.label);
     })
 
