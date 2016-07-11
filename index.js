@@ -1,5 +1,6 @@
 import curve from './src/curve';
-var d3 = require('d3');
+import d3 from 'd3';
+// var d3 = require('d3');
 
 module.exports = {
   plot: function(selector, data, options) {
@@ -385,7 +386,7 @@ module.exports = {
   d3.selectAll('.d3-tip')
     .style({
     'font-family': 'Verdana',
-    background: rgba(0, 0, 0, 0.8),
+    background: 'rgba(0, 0, 0, 0.8)',
     padding: '8px',
     color: 'white', 
     'z-index': 5070

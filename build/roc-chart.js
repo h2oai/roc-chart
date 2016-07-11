@@ -1,9 +1,11 @@
 // https://github.com/h2oai/vis-components#readme Version 0.1.0. Copyright 2016 undefined.
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (factory());
-}(this, function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('d3')) :
+  typeof define === 'function' && define.amd ? define(['d3'], factory) :
+  (factory(global.d3));
+}(this, function (d3$1) { 'use strict';
+
+  d3$1 = 'default' in d3$1 ? d3$1['default'] : d3$1;
 
   function curve (data, tpr, fpr, interpolationMode, xScale, yScale) {
     var lineGenerator = d3.svg.line()
@@ -13,7 +15,7 @@
     return lineGenerator(data);
   }
 
-  var d3$1 = require('d3');
+  // var d3 = require('d3');
 
   module.exports = {
     plot: function(selector, data, options) {
@@ -399,7 +401,7 @@
     d3$1.selectAll('.d3-tip')
       .style({
       'font-family': 'Verdana',
-      background: rgba(0, 0, 0, 0.8),
+      background: 'rgba(0, 0, 0, 0.8)',
       padding: '8px',
       color: 'white', 
       'z-index': 5070
