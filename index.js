@@ -1,3 +1,4 @@
+import curve from './src/curve';
 var d3 = require('d3');
 
 module.exports = {
@@ -81,6 +82,7 @@ module.exports = {
   yAxis.tickFormat(format);
   
   // a function that returns a line generator
+  /*
   function curve(data, tpr) {
 
      var lineGenerator = d3.svg.line()
@@ -90,6 +92,7 @@ module.exports = {
 
     return lineGenerator(data);
   }
+  */
 
   // a function that returns an area generator
   function areaUnderCurve(data, tpr) {
@@ -167,7 +170,7 @@ module.exports = {
       .style("text-anchor", "left")
       .text("True Positive Rate");
 
-  yAxisG = svg.select("g.y.axis");
+  const yAxisG = svg.select("g.y.axis");
 
   // add the right boundary line
   yAxisG.append("line")
@@ -219,12 +222,12 @@ module.exports = {
     })
 
   // draw the ROC curves
-  function drawCurve(data, tpr, stroke){
+  function drawCurve(data, tpr, stroke, x, y){
 
     svg.append("path")
       .attr("class", "curve")
       .style("stroke", stroke)
-      .attr("d", curve(data, tpr))
+      .attr("d", curve(data, tpr, fpr, interpolationMode, x, y))
       .on('mouseover', function(d) {
 
         var areaID = "#" + tpr + "Area";
@@ -301,9 +304,11 @@ module.exports = {
   tprVariables.forEach(function(d, i){
     console.log("drawing the curve for", d.label)
     console.log("color(", i, ")", color(i));
+    console.log('x scale', x);
+    console.log('y scale', y);
     var tpr = d.name;
     drawArea(data, tpr, color(i))
-    drawCurve(data, tpr, color(i));
+    drawCurve(data, tpr, color(i), x, y);
     drawAUCText(d.auc, tpr, d.label);
   })
 

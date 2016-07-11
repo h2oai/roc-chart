@@ -2,9 +2,11 @@
   "name": "rocChart",
   "version": "0.1.0",
   "description": "a chart that plots receiver operating characteristic curves",
-  "main": "index.js",
+  "main": "build/roc-chart.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -o build/roc-chart.js -- index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run test"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,10 @@
     "url": "https://github.com/h2oai/vis-components/issues"
   },
   "homepage": "https://github.com/h2oai/vis-components#readme",
+  "devDependencies": {
+    "package-preamble": "0.0",
+    "rollup": "0.33"
+  },
   "dependencies": {
     "d3": "^3.5.17"
   }
