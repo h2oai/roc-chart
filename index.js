@@ -221,6 +221,7 @@ module.exports = {
       "opacity": 0.4
     })
 
+  let areaID;
   // draw the ROC curves
   function drawCurve(data, tpr, stroke, x, y){
 
@@ -230,7 +231,7 @@ module.exports = {
       .attr("d", curve(data, tpr, fpr, interpolationMode, x, y))
       .on('mouseover', function(d) {
 
-        var areaID = "#" + tpr + "Area";
+        areaID = "#" + tpr + "Area";
         svg.select(areaID)
           .style("opacity", .4)
 
@@ -239,7 +240,7 @@ module.exports = {
           .style("opacity", .9)
       })
       .on('mouseout', function(){
-        var areaID = "#" + tpr + "Area";
+        areaID = "#" + tpr + "Area";
         svg.select(areaID)
           .style("opacity", 0)
 
@@ -336,7 +337,7 @@ module.exports = {
           .duration(250)
           .style("opacity", 0)
 
-      textClass = "." + tprVariablesAscByAUC[i]["name"] + "text";
+      const textClass = "." + tprVariablesAscByAUC[i]["name"] + "text";
       svg.selectAll(textClass)
         .transition()
           .delay(2000 * (i+1))
