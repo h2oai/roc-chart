@@ -2,6 +2,7 @@ import curve from './src/curve';
 import areaUnderCurve from './src/areaUnderCurve';
 import drawArea from './src/drawArea';
 import drawCurve from './src/drawCurve';
+import drawAUCText from './src/drawAUCText';
 import d3 from 'd3';
 // var d3 = require('d3');
 
@@ -201,32 +202,6 @@ module.exports = {
     })
 
   let areaID;
-
-  function drawAUCText(auc, tpr, label) {
-
-    svg.append("g")
-      .attr("class", tpr + "text")
-      .style("opacity", 0)
-      .attr("transform", "translate(" + .5*width + "," + .79*height + ")")
-      .append("text")
-        .text(label)
-        .style({
-          "fill": "white",
-          "font-size": 18
-        });
-
-    svg.append("g")
-      .attr("class", tpr + "text")
-      .style("opacity", 0)
-      .attr("transform", "translate(" + .5*width + "," + .84*height + ")")
-      .append("text")
-        .text("AUC = " + aucFormat(auc))
-        .style({
-          "fill": "white",
-          "font-size": 18
-        });
-
-  }
   
   // calculate the area under each curve
   tprVariables.forEach(function(d){
@@ -248,7 +223,7 @@ module.exports = {
     var tpr = d.name;
     drawArea(data, svg, height, tpr, fpr, x, y, color(i));
     drawCurve(data, svg, tpr, fpr, color(i), x, y, areaID, interpolationMode); 
-    drawAUCText(d.auc, tpr, d.label);
+    drawAUCText(svg, tpr, width, height, d.label, aucFormat, d.auc);
   })
 
   ///////////////////////////////////////////////////

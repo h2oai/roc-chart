@@ -61,6 +61,30 @@
       });
   }
 
+  function drawAUCText (svg, tpr, width, height, label, aucFormat, auc) {
+    svg.append('g')
+      .attr('class', tpr + 'text')
+      .style('opacity', 0)
+      .attr('transform', `translate(${0.5 * width}, ${0.79 * height})`)
+      .append('text')
+        .text(label)
+        .style({
+          'fill': 'white',
+          'font-size': 18
+        });
+
+    svg.append('g')
+      .attr('class', tpr + 'text')
+      .style('opacity', 0)
+      .attr('transform', `translate(${0.5 * width}, ${0.84 * height})`)
+      .append('text')
+        .text('AUC = ' + aucFormat(auc))
+        .style({
+          'fill': 'white',
+          'font-size': 18
+        });
+  }
+
   // var d3 = require('d3');
 
   module.exports = {
@@ -259,32 +283,6 @@
       })
 
     let areaID;
-
-    function drawAUCText(auc, tpr, label) {
-
-      svg.append("g")
-        .attr("class", tpr + "text")
-        .style("opacity", 0)
-        .attr("transform", "translate(" + .5*width + "," + .79*height + ")")
-        .append("text")
-          .text(label)
-          .style({
-            "fill": "white",
-            "font-size": 18
-          });
-
-      svg.append("g")
-        .attr("class", tpr + "text")
-        .style("opacity", 0)
-        .attr("transform", "translate(" + .5*width + "," + .84*height + ")")
-        .append("text")
-          .text("AUC = " + aucFormat(auc))
-          .style({
-            "fill": "white",
-            "font-size": 18
-          });
-
-    }
     
     // calculate the area under each curve
     tprVariables.forEach(function(d){
@@ -306,7 +304,7 @@
       var tpr = d.name;
       drawArea(data, svg, height, tpr, fpr, x, y, color(i));
       drawCurve(data, svg, tpr, fpr, color(i), x, y, areaID, interpolationMode); 
-      drawAUCText(d.auc, tpr, d.label);
+      drawAUCText(svg, tpr, width, height, d.label, aucFormat, d.auc);
     })
 
     ///////////////////////////////////////////////////
