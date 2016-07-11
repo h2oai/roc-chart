@@ -1,4 +1,5 @@
 import curve from './src/curve';
+import areaUnderCurve from './src/areaUnderCurve';
 import d3 from 'd3';
 // var d3 = require('d3');
 
@@ -81,30 +82,6 @@ module.exports = {
   // apply the format to the ticks we chose
   xAxis.tickFormat(format);
   yAxis.tickFormat(format);
-  
-  // a function that returns a line generator
-  /*
-  function curve(data, tpr) {
-
-     var lineGenerator = d3.svg.line()
-      .interpolate(interpolationMode)
-      .x(function(d) { return x(d[fpr]); })
-      .y(function(d) { return y(d[tpr]); });
-
-    return lineGenerator(data);
-  }
-  */
-
-  // a function that returns an area generator
-  function areaUnderCurve(data, tpr) {
-
-    var areaGenerator = d3.svg.area()
-      .x(function(d) { return x(d[fpr]); })
-      .y0(height)
-      .y1(function(d) { return y(d[tpr]); });
-
-    return areaGenerator(data);
-  }
 
   var svg = d3.select(selector)
     .append("svg")
@@ -262,7 +239,7 @@ module.exports = {
         "fill": fill,
         "opacity": 0
       })
-      .attr("d", areaUnderCurve(data, tpr))
+      .attr("d", areaUnderCurve(data, height, tpr, fpr, x, y))
   }
 
   function drawAUCText(auc, tpr, label) {
