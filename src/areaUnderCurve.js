@@ -1,3 +1,5 @@
+import d3 from 'd3';
+
 export default function (data, height, tpr, fpr, xScale, yScale) {
   const areaGenerator = d3.svg.area()
     .x(d => xScale(d[fpr]))
