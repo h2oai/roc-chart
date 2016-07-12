@@ -4,7 +4,6 @@ import drawAUCText from './src/drawAUCText';
 import generatePoints from './src/generatePoints';
 import calculateArea from './src/calculateArea';
 import d3 from 'd3';
-// var d3 = require('d3');
 
 module.exports = {
   plot: function plot(selector, data, options) {
@@ -20,7 +19,8 @@ module.exports = {
       tprVariables: [{
         name: 'tpr0',
       }],
-      animate: true
+      animate: true,
+      hideTicks: false
     };
 
     // console.log('options passed to rocChart.plot', options);
@@ -308,5 +308,10 @@ module.exports = {
         color: 'white',
         'z-index': 5070
       });
+
+    if (options.hideTicks) {
+      d3.selectAll('.tick')
+        .style('opacity', 0);
+    }
   }
 };
