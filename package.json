@@ -7,7 +7,7 @@
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -g d3:d3 -n d3 -o build/roc-chart.js -- index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "npm run test",
-    "lint": "eslint index.js"
+    "lint": "eslint index.js src"
   },
   "repository": {
     "type": "git",
