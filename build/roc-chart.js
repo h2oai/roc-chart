@@ -106,8 +106,6 @@
     return area;
   }
 
-  // var d3 = require('d3');
-
   module.exports = {
     plot: function plot(selector, data, options) {
       // set default configuration
@@ -122,7 +120,8 @@
         tprVariables: [{
           name: 'tpr0',
         }],
-        animate: true
+        animate: true,
+        hideTicks: false
       };
 
       // console.log('options passed to rocChart.plot', options);
@@ -410,6 +409,11 @@
           color: 'white',
           'z-index': 5070
         });
+
+      if (options.hideTicks) {
+        d3.selectAll('.tick')
+          .style('opacity', 0);
+      }
     }
   };
 
