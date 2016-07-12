@@ -4,10 +4,10 @@ export default function (data, svg, height, tpr, fpr, x, y, fill) {
   // draw the area under the ROC curves
   svg.append('path')
     .attr('class', 'area')
-    .attr('id', tpr + 'Area')
+    .attr('id', `${tpr}Area`)
     .style({
-      'fill': fill,
-      'opacity': 0
+      fill,
+      opacity: 0
     })
-    .attr('d', areaUnderCurve(data, height, tpr, fpr, x, y))
+    .attr('d', areaUnderCurve(data, height, tpr, fpr, x, y));
 }
