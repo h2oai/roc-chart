@@ -2,13 +2,18 @@
   "name": "rocChart",
   "version": "0.1.0",
   "description": "a chart that plots receiver operating characteristic curves",
-  "main": "index.js",
+  "main": "build/roc-chart.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -g d3:d3 -n d3 -o build/roc-chart.js -- index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint index.js src"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/h2oai/vis-components.git"
+  },
+  "publishConfig": {
+    "registry": "http://172.17.0.53:8081/nexus/content/repositories/npm-internal/"
   },
   "keywords": [
     "roc",
@@ -22,15 +27,26 @@
     "viz"
   ],
   "author": "h2o.ai <micah@h2o.ai>",
-  "contributors": [{
-    "name": "@micahstubbs",
-    "email": "micah.stubbs@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "@micahstubbs",
+      "email": "micah.stubbs@gmail.com"
+    }
+  ],
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/h2oai/vis-components/issues"
   },
   "homepage": "https://github.com/h2oai/vis-components#readme",
+  "devDependencies": {
+    "eslint": "^2.13.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.10.2",
+    "eslint-plugin-jsx-a11y": "^1.5.5",
+    "eslint-plugin-react": "^5.2.2",
+    "package-preamble": "0.0",
+    "rollup": "0.33"
+  },
   "dependencies": {
     "d3": "^3.5.17"
   }
