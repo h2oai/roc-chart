@@ -6,9 +6,9 @@ export default function (points) {
   points.forEach((d, i) => {
     const x = 0;
     const y = 1;
-    if('undefined' !== typeof points[i-1]){
-      area += (points[i][x] - points[i-1][x]) * (points[i-1][y] + points[i][y]) / 2;
-    } 
+    if (typeof points[i - 1] !== 'undefined') {
+      area += (points[i][x] - points[i - 1][x]) * (points[i - 1][y] + points[i][y]) / 2;
+    }
   });
   return area;
 }
