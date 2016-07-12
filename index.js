@@ -269,20 +269,20 @@ module.exports = {
     }
 
     // styles
-    d3.select('body')
+    svg.selectAll('text')
       .style({
-        'font-size': '12px',
+        // 'font-size': '12px',
         'font-family': 'Open Sans'
       });
 
-    d3.selectAll('path.curve')
+    svg.selectAll('path.curve')
       .style({
         'stroke-width': 3,
         fill: 'none',
         opacity: 0.7
       });
 
-    d3.selectAll('.axis path')
+    svg.selectAll('.axis path')
       .style({
         fill: 'none',
         stroke: 'grey',
@@ -291,7 +291,7 @@ module.exports = {
         opacity: 1
       });
 
-    d3.selectAll('.axis line')
+    svg.selectAll('.axis line')
       .style({
         fill: 'none',
         stroke: 'grey',
@@ -300,7 +300,7 @@ module.exports = {
         opacity: 1
       });
 
-    d3.selectAll('.d3-tip')
+    svg.selectAll('.d3-tip')
       .style({
         'font-family': 'Verdana',
         background: 'rgba(0, 0, 0, 0.8)',
@@ -310,7 +310,7 @@ module.exports = {
       });
 
     if (options.hideTicks) {
-      d3.selectAll('.tick')
+      svg.selectAll('.tick')
         .style('opacity', 0);
     }
   }
