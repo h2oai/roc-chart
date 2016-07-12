@@ -4,6 +4,7 @@ import drawArea from './src/drawArea';
 import drawCurve from './src/drawCurve';
 import drawAUCText from './src/drawAUCText';
 import generatePoints from './src/generatePoints';
+import calculateArea from './src/calculateArea';
 import d3 from 'd3';
 // var d3 = require('d3');
 
@@ -304,29 +305,5 @@ module.exports = {
     color: 'white', 
     'z-index': 5070
   })
-
-  ///////////////////////////////////////////////////
-  ///////////////////////////////////////////////////
-  ///////////////////////////////////////////////////
-
-  // numerical integration
-  function calculateArea(points) {
-    var area = 0.0;
-    var length = points.length;
-    if (length <= 2) {
-      return area;
-    }
-    points.forEach(function(d, i) {
-      var x = 0,
-          y = 1;
-
-      if('undefined' !== typeof points[i-1]){
-        area += (points[i][x] - points[i-1][x]) * (points[i-1][y] + points[i][y]) / 2;
-      }
-      
-    });
-    return area;
-  }
-
   }
 } 
