@@ -112,17 +112,17 @@
     plot: function(selector, data, options) {
     // set default configuration
     var cfg = {
-      "margin": {top: 30, right: 20, bottom: 70, left: 61},
-      "width": 470,
-      "height": 450,
-      "interpolationMode": "basis",
-      "ticks": undefined,
-      "tickValues": [0, .1, .25, .5, .75, .9, 1],
-      "fpr": "fpr",
-      "tprVariables": [{
-        "name": "tpr0",
+      'margin': {top: 30, right: 20, bottom: 70, left: 61},
+      'width': 470,
+      'height': 450,
+      'interpolationMode': 'basis',
+      'ticks': undefined,
+      'tickValues': [0, .1, .25, .5, .75, .9, 1],
+      'fpr': 'fpr',
+      'tprVariables': [{
+        'name': 'tpr0',
       }], 
-      "animate": true
+      'animate': true
     }
 
     console.log('options passed to rocChart.plot', options);
@@ -134,7 +134,7 @@
       }//for i
     }//if
 
-    var tprVariables = cfg["tprVariables"];
+    var tprVariables = cfg['tprVariables'];
     // if values for labels are not specified
     // set the default values for the labels to the corresponding
     // true positive rate variable name
@@ -145,40 +145,40 @@
 
     })
 
-    console.log("tprVariables", tprVariables);
+    console.log('tprVariables', tprVariables);
 
-    const interpolationMode = cfg["interpolationMode"];
-    const fpr = cfg["fpr"];
-    const width = cfg["width"];
-    const height = cfg["height"];
-    const animate = cfg["animate"];
-    const margin = cfg["margin"];
+    const interpolationMode = cfg['interpolationMode'];
+    const fpr = cfg['fpr'];
+    const width = cfg['width'];
+    const height = cfg['height'];
+    const animate = cfg['animate'];
+    const margin = cfg['margin'];
 
     var format = d3$1.format('.2');
     var aucFormat = d3$1.format('.4r');
     
     var x = d3$1.scale.linear().range([0, width]);
     var y = d3$1.scale.linear().range([height, 0]);
-    var color = d3$1.scale.category10() // d3.scale.ordinal().range(["steelblue", "red", "green", "purple"]);
+    var color = d3$1.scale.category10() // d3.scale.ordinal().range(['steelblue', 'red', 'green', 'purple']);
 
     var xAxis = d3$1.svg.axis()
       .scale(x)
-      .orient("top")
+      .orient('top')
       .outerTickSize(0);
 
     var yAxis = d3$1.svg.axis()
       .scale(y)
-      .orient("right")
+      .orient('right')
       .outerTickSize(0);
 
     // set the axis ticks based on input parameters,
     // if ticks or tickValues are specified
-    if('undefined' !== typeof cfg["ticks"]) {
-      xAxis.ticks(cfg["ticks"]);
-      yAxis.ticks(cfg["ticks"]);
-    } else if ('undefined' !== typeof cfg["tickValues"]) {
-      xAxis.tickValues(cfg["tickValues"]);
-      yAxis.tickValues(cfg["tickValues"]);
+    if('undefined' !== typeof cfg['ticks']) {
+      xAxis.ticks(cfg['ticks']);
+      yAxis.ticks(cfg['ticks']);
+    } else if ('undefined' !== typeof cfg['tickValues']) {
+      xAxis.tickValues(cfg['tickValues']);
+      yAxis.tickValues(cfg['tickValues']);
     } else {
       xAxis.ticks(5);
       yAxis.ticks(5);
@@ -189,44 +189,44 @@
     yAxis.tickFormat(format);
 
     var svg = d3$1.select(selector)
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     x.domain([0, 1]);
     y.domain([0, 1]);
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis)
-        .append("text")            
-          .attr("x", width / 2)
-          .attr("y", 40 )
-          .style("text-anchor", "middle")
-          .text("False Positive Rate")
+        .append('text')            
+          .attr('x', width / 2)
+          .attr('y', 40 )
+          .style('text-anchor', 'middle')
+          .text('False Positive Rate')
             
-    var xAxisG = svg.select("g.x.axis");
+    var xAxisG = svg.select('g.x.axis');
               
     // draw the top boundary line
-    xAxisG.append("line")
+    xAxisG.append('line')
       .attr({
-        "x1": -1,
-        "x2": width + 1,
-        "y1": -height,
-        "y2": -height
+        'x1': -1,
+        'x2': width + 1,
+        'y1': -height,
+        'y2': -height
       });
 
     // draw a bottom boundary line over the existing
     // x-axis domain path to make even corners
-    xAxisG.append("line")
+    xAxisG.append('line')
       .attr({
-        "x1": -1,
-        "x2": width + 1,
-        "y1": 0,
-        "y2": 0
+        'x1': -1,
+        'x2': width + 1,
+        'y1': 0,
+        'y2': 0
       });
 
     // position the axis tick labels below the x-axis
@@ -234,33 +234,33 @@
       .attr('transform', 'translate(0,' + 25 + ')');
 
     // hide the y-axis ticks for 0 and 1
-    xAxisG.selectAll("g.tick line")
-      .style("opacity", function(d) {
+    xAxisG.selectAll('g.tick line')
+      .style('opacity', function(d) {
         // if d is an integer
         return d % 1 === 0 ? 0 : 1;
       });
 
-    svg.append("g")
-      .attr("class", "y axis")
+    svg.append('g')
+      .attr('class', 'y axis')
       .call(yAxis)
-      .append("text")            
-        .attr("transform", "rotate(-90)")
-        .attr("y", -35)
+      .append('text')            
+        .attr('transform', 'rotate(-90)')
+        .attr('y', -35)
         // manually configured so that the label is centered vertically 
-        .attr("x", 0 - height/1.56)  
-        .style("font-size","12px")              
-        .style("text-anchor", "left")
-        .text("True Positive Rate");
+        .attr('x', 0 - height/1.56)  
+        .style('font-size','12px')              
+        .style('text-anchor', 'left')
+        .text('True Positive Rate');
 
-    const yAxisG = svg.select("g.y.axis");
+    const yAxisG = svg.select('g.y.axis');
 
     // add the right boundary line
-    yAxisG.append("line")
+    yAxisG.append('line')
       .attr({
-        "x1": width,
-        "x2": width,
-        "y1": 0,
-        "y2": height
+        'x1': width,
+        'x2': width,
+        'y1': 0,
+        'y2': height
       })
 
     // position the axis tick labels to the right of 
@@ -269,7 +269,7 @@
     // so that they are right aligned
     // or even with the 2nd digit of the decimal number
     // tick labels
-    yAxisG.selectAll("g.tick text")
+    yAxisG.selectAll('g.tick text')
       .attr('transform', function(d) {
         if(d % 1 === 0) { // if d is an integer
           return 'translate(' + -22 + ',0)';
@@ -281,26 +281,26 @@
     })
 
     // hide the y-axis ticks for 0 and 1
-    yAxisG.selectAll("g.tick line")
-      .style("opacity", function(d) {
+    yAxisG.selectAll('g.tick line')
+      .style('opacity', function(d) {
         // if d is an integer
         return d % 1 === 0 ? 0 : 1;
       });
 
     // draw the random guess line
-    svg.append("line") 
-      .attr("class", "curve")         
-      .style("stroke", "black")
+    svg.append('line') 
+      .attr('class', 'curve')         
+      .style('stroke', 'black')
       .attr({
-        "x1": 0,
-        "x2": width,
-        "y1": height,
-        "y2": 0
+        'x1': 0,
+        'x2': width,
+        'y1': height,
+        'y2': 0
       })
       .style({
-        "stroke-width": 2,
-        "stroke-dasharray": "8",
-        "opacity": 0.4
+        'stroke-width': 2,
+        'stroke-dasharray': '8',
+        'opacity': 0.4
       })
 
     let areaID;
@@ -310,16 +310,16 @@
       var tpr = d.name;
       var points = generatePoints(data, fpr, tpr);
       var auc = calculateArea(points);
-      d["auc"] = auc;
+      d['auc'] = auc;
     })
 
-    console.log("tprVariables", tprVariables);
+    console.log('tprVariables', tprVariables);
 
     // draw curves, areas, and text for each 
     // true-positive rate in the data
     tprVariables.forEach(function(d, i){
-      console.log("drawing the curve for", d.label)
-      console.log("color(", i, ")", color(i));
+      console.log('drawing the curve for', d.label)
+      console.log('color(', i, ')', color(i));
       console.log('x scale', x);
       console.log('y scale', y);
       var tpr = d.name;
@@ -332,80 +332,79 @@
     ////// animate through areas for each curve ///////
     ///////////////////////////////////////////////////
 
-    if(animate && animate !== "false") {
+    if(animate && animate !== 'false') {
       //sort tprVariables ascending by AUC
       var tprVariablesAscByAUC = tprVariables.sort(function(a, b) {
         return a.auc - b.auc;
       })
 
-      console.log("tprVariablesAscByAUC", tprVariablesAscByAUC);
+      console.log('tprVariablesAscByAUC', tprVariablesAscByAUC);
       
-      for(var i = 0; i < tprVariablesAscByAUC.length; i++) {
-        areaID = "#" + tprVariablesAscByAUC[i]["name"] + "Area";
+      for(let k = 0; k < tprVariablesAscByAUC.length; k++) {
+        areaID = '#' + tprVariablesAscByAUC[k]['name'] + 'Area';
         svg.select(areaID)
           .transition()
-            .delay(2000 * (i+1))
+            .delay(2000 * (k + 1))
             .duration(250)
-            .style("opacity", .4)
+            .style('opacity', 0.4)
           .transition()
-            .delay(2000 * (i+2))
+            .delay(2000 * (k + 2))
             .duration(250)
-            .style("opacity", 0)
+            .style('opacity', 0)
 
-        const textClass = "." + tprVariablesAscByAUC[i]["name"] + "text";
+        const textClass = '.' + tprVariablesAscByAUC[k]['name'] + 'text';
         svg.selectAll(textClass)
           .transition()
-            .delay(2000 * (i+1))
+            .delay(2000 * (k + 1))
             .duration(250)
-            .style("opacity", .9)
+            .style('opacity', 0.9)
           .transition()
-            .delay(2000 * (i+2))
+            .delay(2000 * (k + 2))
             .duration(250)
-            .style("opacity", 0)
-      }  
+            .style('opacity', 0);
+      }
     }
+      // styles
+      d3$1.select('body')
+        .style({
+          'font-size': '12px',
+          'font-family': 'Open Sans'
+        });
 
-    // styles
-    d3$1.select('body')
-      .style({ 
-        'font-size': '12px', 
-        'font-family': 'Open Sans'
-      });
+      d3$1.selectAll('path.curve')
+        .style({
+          'stroke-width': 3,
+          fill: 'none',
+          opacity: 0.7
+        });
 
-    d3$1.selectAll('path.curve')
-      .style({
-        'stroke-width': 3,
-        'fill': 'none',
-        'opacity': 0.7
-      });
+      d3$1.selectAll('.axis path')
+        .style({
+          fill: 'none',
+          stroke: 'grey',
+          'stroke-width': 2,
+          'shape-rendering': 'crispEdges',
+          opacity: 1
+        });
 
-    d3$1.selectAll('.axis path')
-      .style({
-        fill: 'none',
-        stroke: 'grey',
-        'stroke-width': 2,
-        'shape-rendering': 'crispEdges',
-        opacity: 1
-      });
+      d3$1.selectAll('.axis line')
+        .style({
+          fill: 'none',
+          stroke: 'grey',
+          'stroke-width': 2,
+          'shape-rendering': 'crispEdges',
+          opacity: 1
+        });
 
-    d3$1.selectAll('.axis line')
-      .style({
-        fill: 'none',
-        stroke: 'grey',
-        'stroke-width': 2,
-        'shape-rendering': 'crispEdges',
-        opacity: 1
-      });
-
-    d3$1.selectAll('.d3-tip')
-      .style({
-      'font-family': 'Verdana',
-      background: 'rgba(0, 0, 0, 0.8)',
-      padding: '8px',
-      color: 'white', 
-      'z-index': 5070
-    })
+      d3$1.selectAll('.d3-tip')
+        .style({
+          'font-family': 'Verdana',
+          background: 'rgba(0, 0, 0, 0.8)',
+          padding: '8px',
+          color: 'white',
+          'z-index': 5070
+        });
     }
-  }
+  };
 
 }));
