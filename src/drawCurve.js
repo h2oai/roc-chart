@@ -6,22 +6,22 @@ export default function (data, svg, tpr, fpr, stroke, x, y, areaID, interpolatio
     .attr('class', 'curve')
     .style('stroke', stroke)
     .attr('d', curve(data, tpr, fpr, interpolationMode, x, y))
-    .on('mouseover', function(d) {
-      areaID = '#' + tpr + 'Area';
+    .on('mouseover', () => {
+      areaID = `#${tpr}Area`;
       svg.select(areaID)
-        .style('opacity', .4)
+        .style('opacity', 0.4);
 
-      var aucText = '.' + tpr + 'text'; 
+      const aucText = `.${tpr}text`;
       svg.selectAll(aucText)
-        .style('opacity', .9)
-      })
-    .on('mouseout', function(){
-      areaID = '#' + tpr + 'Area';
+        .style('opacity', 0.9);
+    })
+    .on('mouseout', () => {
+      areaID = `#${tpr}Area`;
       svg.select(areaID)
-        .style('opacity', 0)
+        .style('opacity', 0);
 
-      var aucText = '.' + tpr + 'text'; 
+      const aucText = `.${tpr}text`;
       svg.selectAll(aucText)
-        .style('opacity', 0)
+        .style('opacity', 0);
     });
 }
