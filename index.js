@@ -269,9 +269,9 @@ module.exports = {
     }
 
     // styles
-    d3.select('body')
+    svg.selectAll('text')
       .style({
-        'font-size': '12px',
+        // 'font-size': '12px',
         'font-family': 'Open Sans'
       });
 
