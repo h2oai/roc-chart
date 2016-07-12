@@ -7,7 +7,7 @@ export default function (svg, tpr, width, height, label, aucFormat, auc) {
       .text(label)
       .style({
         fill: 'white',
-        'font-size': 18
+        'font-size': () => width / 25
       });
 
   svg.append('g')
@@ -18,6 +18,6 @@ export default function (svg, tpr, width, height, label, aucFormat, auc) {
       .text(`AUC = ${aucFormat(auc)}`)
       .style({
         fill: 'white',
-        'font-size': 18
+        'font-size': () => width / 25
       });
 }

@@ -70,7 +70,7 @@
         .text(label)
         .style({
           fill: 'white',
-          'font-size': 18
+          'font-size': () => width / 25
         });
 
     svg.append('g')
@@ -81,7 +81,7 @@
         .text(`AUC = ${aucFormat(auc)}`)
         .style({
           fill: 'white',
-          'font-size': 18
+          'font-size': () => width / 25
         });
   }
 
