@@ -3,6 +3,7 @@ import areaUnderCurve from './src/areaUnderCurve';
 import drawArea from './src/drawArea';
 import drawCurve from './src/drawCurve';
 import drawAUCText from './src/drawAUCText';
+import generatePoints from './src/generatePoints';
 import d3 from 'd3';
 // var d3 = require('d3');
 
@@ -307,14 +308,6 @@ module.exports = {
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
   ///////////////////////////////////////////////////
-
-  function generatePoints(data, x, y) {
-    var points = [];
-    data.forEach(function(d){
-      points.push([ Number(d[x]), Number(d[y]) ])
-    })
-    return points;
-  }
 
   // numerical integration
   function calculateArea(points) {

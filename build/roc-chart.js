@@ -85,6 +85,12 @@
         });
   }
 
+  function generatePoints (data, x, y) {
+    const points = [];
+    data.forEach(d => { points.push([ Number(d[x]), Number(d[y]) ]) });
+    return points;
+  }
+
   // var d3 = require('d3');
 
   module.exports = {
@@ -388,14 +394,6 @@
     ///////////////////////////////////////////////////
     ///////////////////////////////////////////////////
     ///////////////////////////////////////////////////
-
-    function generatePoints(data, x, y) {
-      var points = [];
-      data.forEach(function(d){
-        points.push([ Number(d[x]), Number(d[y]) ])
-      })
-      return points;
-    }
 
     // numerical integration
     function calculateArea(points) {
