@@ -1,6 +1,6 @@
 {
   "name": "roc-chart",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "a chart that plots receiver operating characteristic curves",
   "main": "build/roc-chart.js",
   "scripts": {
