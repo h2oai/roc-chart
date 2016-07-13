@@ -205,7 +205,10 @@ module.exports = {
         y2: 0
       })
       .style({
-        'stroke-width': 2,
+        'stroke-width': () => {
+          if (width > 200) return '2px';
+          else return '1px';
+        },
         'stroke-dasharray': '8',
         opacity: 0.4
       });
@@ -277,7 +280,10 @@ module.exports = {
 
     svg.selectAll('path.curve')
       .style({
-        'stroke-width': 3,
+        'stroke-width': () => {
+          if (width > 200) return '3px';
+          else return '1px';
+        },
         fill: 'none',
         opacity: 0.7
       });
@@ -286,7 +292,10 @@ module.exports = {
       .style({
         fill: 'none',
         stroke: 'grey',
-        'stroke-width': 2,
+        'stroke-width': () => {
+          if (width > 200) return '2px';
+          else return '1px';
+        },
         'shape-rendering': 'crispEdges',
         opacity: 1
       });
@@ -295,7 +304,10 @@ module.exports = {
       .style({
         fill: 'none',
         stroke: 'grey',
-        'stroke-width': 2,
+        'stroke-width': () => {
+          if (width > 200) return '2px';
+          else return '1px';
+        },
         'shape-rendering': 'crispEdges',
         opacity: 1
       });
