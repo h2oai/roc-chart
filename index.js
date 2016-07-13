@@ -3,6 +3,8 @@ import drawCurve from './src/drawCurve';
 import drawAUCText from './src/drawAUCText';
 import generatePoints from './src/generatePoints';
 import calculateArea from './src/calculateArea';
+import prepareAxes from './src/prepareAxes';
+import drawAxes from './src/drawAxes';
 import d3 from 'd3';
 
 module.exports = {
@@ -20,7 +22,8 @@ module.exports = {
         name: 'tpr0',
       }],
       animate: true,
-      hideTicks: false
+      hideTicks: false,
+      hideAxes: false
     };
 
     // console.log('options passed to rocChart.plot', options);
@@ -50,152 +53,43 @@ module.exports = {
     const height = cfg.height;
     const animate = cfg.animate;
     const margin = cfg.margin;
+    const hideAxes = cfg.hideAxes;
 
     const format = d3.format('.2');
     const aucFormat = d3.format('.4r');
 
-    const x = d3.scale.linear().range([0, width]);
-    const y = d3.scale.linear().range([height, 0]);
+    const x = d3.scale.linear()
+      .range([0, width]);
+
+    const y = d3.scale.linear()
+      .range([height, 0]);
+
     const color = d3.scale.category10();
     // const color = d3.scale.ordinal().range(['steelblue', 'red', 'green', 'purple']);
 
-    const xAxis = d3.svg.axis()
-      .scale(x)
-      .orient('top')
-      .outerTickSize(0);
-
-    const yAxis = d3.svg.axis()
-      .scale(y)
-      .orient('right')
-      .outerTickSize(0);
-
-    // set the axis ticks based on input parameters,
-    // if ticks or tickValues are specified
-    if (typeof cfg.ticks !== 'undefined') {
-      xAxis.ticks(cfg.ticks);
-      yAxis.ticks(cfg.ticks);
-    } else if (typeof cfg.tickValues !== 'undefined') {
-      xAxis.tickValues(cfg.tickValues);
-      yAxis.tickValues(cfg.tickValues);
-    } else {
-      xAxis.ticks(5);
-      yAxis.ticks(5);
+    // prepare the axes if specified in the config
+    let axes;
+    if (!hideAxes) {
+      axes = prepareAxes(cfg, format, x, y); // eslint-disable-line
     }
-
-    // apply the format to the ticks we chose
-    xAxis.tickFormat(format);
-    yAxis.tickFormat(format);
 
     const svg = d3.select(selector)
       .append('svg')
         .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-          .attr('transform', `translate(${margin.left}, ${margin.top})`);
+        .attr('height', height + margin.top + margin.bottom);
+
+    const chartArea = svg.append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
     x.domain([0, 1]);
     y.domain([0, 1]);
 
-    svg.append('g')
-        .attr('class', 'x axis')
-        .attr('transform', `translate(0, ${height})`)
-        .call(xAxis)
-        .append('text')
-          .attr('x', width / 2)
-          .attr('y', 40)
-          .style('text-anchor', 'middle')
-          .text('False Positive Rate');
-
-    const xAxisG = svg.select('g.x.axis');
-
-    // draw the top boundary line
-    xAxisG.append('line')
-      .attr({
-        x1: -1,
-        x2: width + 1,
-        y1: -height,
-        y2: -height
-      });
-
-    // draw a bottom boundary line over the existing
-    // x-axis domain path to make even corners
-    xAxisG.append('line')
-      .attr({
-        x1: -1,
-        x2: width + 1,
-        y1: 0,
-        y2: 0
-      });
-
-    // position the axis tick labels below the x-axis
-    xAxisG.selectAll('.tick text')
-      .attr('transform', `translate(0, ${25})`);
-
-    // hide the y-axis ticks for 0 and 1
-    xAxisG.selectAll('g.tick line')
-        .style('opacity', d => {
-          switch (d % 1) {
-            // if d is an integer
-            case 0:
-              return 0;
-            default:
-              return 1;
-          }
-        });
-
-    svg.append('g')
-      .attr('class', 'y axis')
-      .call(yAxis)
-      .append('text')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', -35)
-        // manually configured so that the label is centered vertically
-        .attr('x', 0 - height / 1.56)
-        .style('font-size', '12px')
-        .style('text-anchor', 'left')
-        .text('True Positive Rate');
-
-    const yAxisG = svg.select('g.y.axis');
-
-    // add the right boundary line
-    yAxisG.append('line')
-      .attr({
-        x1: width,
-        x2: width,
-        y1: 0,
-        y2: height
-      });
-
-    // position the axis tick labels to the right of
-    // the y-axis and
-    // translate the first and the last tick labels
-    // so that they are right aligned
-    // or even with the 2nd digit of the decimal number
-    // tick labels
-    yAxisG.selectAll('g.tick text')
-      .attr('transform', d => {
-        if (d % 1 === 0) { // if d is an integer
-          return `translate(${-22}, 0)`;
-        } else if ((d * 10) % 1 === 0) { // if d is a 1 place decimal
-          return `translate(${-32}, 0)`;
-        }
-        return `translate(${-42}, 0)`;
-      });
-
-    // hide the y-axis ticks for 0 and 1
-    yAxisG.selectAll('g.tick line')
-      .style('opacity', d => {
-        switch (d % 1) {
-          // if d is an integer
-          case 0:
-            return 0;
-          default:
-            return 1;
-        }
-      });
-
+    // draw the axes if specified in the config
+    if (!hideAxes) {
+      drawAxes(svg, axes, height, width);
+    }
     // draw the random guess line
-    svg.append('line')
+    chartArea.append('line')
       .attr('class', 'curve')
       .style('stroke', 'black')
       .attr({
@@ -207,7 +101,7 @@ module.exports = {
       .style({
         'stroke-width': () => {
           if (width > 200) return '2px';
-          else return '1px';
+          return '1px';
         },
         'stroke-dasharray': '8',
         opacity: 0.4
@@ -233,9 +127,9 @@ module.exports = {
       // console.log('x scale', x);
       // console.log('y scale', y);
       const tpr = d.name;
-      drawArea(data, svg, height, tpr, fpr, x, y, color(i));
-      drawCurve(data, svg, tpr, fpr, color(i), x, y, areaID, interpolationMode);
-      drawAUCText(svg, tpr, width, height, d.label, aucFormat, d.auc);
+      drawArea(data, chartArea, height, tpr, fpr, x, y, color(i));
+      drawCurve(data, chartArea, tpr, fpr, color(i), x, y, areaID, interpolationMode);
+      drawAUCText(chartArea, tpr, width, height, d.label, aucFormat, d.auc);
     });
 
     //
@@ -248,7 +142,7 @@ module.exports = {
       // console.log('tprVariablesAscByAUC', tprVariablesAscByAUC);
       for (let k = 0; k < tprVariablesAscByAUC.length; k++) {
         areaID = `#${tprVariablesAscByAUC[k].name}Area`;
-        svg.select(areaID)
+        chartArea.select(areaID)
           .transition()
             .delay(2000 * (k + 1))
             .duration(250)
@@ -259,7 +153,7 @@ module.exports = {
             .style('opacity', 0);
 
         const textClass = `.${tprVariablesAscByAUC[k].name}text`;
-        svg.selectAll(textClass)
+        chartArea.selectAll(textClass)
           .transition()
             .delay(2000 * (k + 1))
             .duration(250)
@@ -282,7 +176,7 @@ module.exports = {
       .style({
         'stroke-width': () => {
           if (width > 200) return '3px';
-          else return '1px';
+          return '1px';
         },
         fill: 'none',
         opacity: 0.7
@@ -294,7 +188,7 @@ module.exports = {
         stroke: 'grey',
         'stroke-width': () => {
           if (width > 200) return '2px';
-          else return '1px';
+          return '1px';
         },
         'shape-rendering': 'crispEdges',
         opacity: 1
@@ -306,7 +200,7 @@ module.exports = {
         stroke: 'grey',
         'stroke-width': () => {
           if (width > 200) return '2px';
-          else return '1px';
+          return '1px';
         },
         'shape-rendering': 'crispEdges',
         opacity: 1
