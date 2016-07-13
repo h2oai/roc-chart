@@ -5,6 +5,7 @@ import generatePoints from './src/generatePoints';
 import calculateArea from './src/calculateArea';
 import prepareAxes from './src/prepareAxes';
 import drawAxes from './src/drawAxes';
+import drawBoundaries from './src/drawBoundaries';
 import d3 from 'd3';
 
 module.exports = {
@@ -23,7 +24,8 @@ module.exports = {
       }],
       animate: true,
       hideTicks: false,
-      hideAxes: false
+      hideAxes: false,
+      hideBoundaries: false
     };
 
     // console.log('options passed to rocChart.plot', options);
@@ -54,6 +56,7 @@ module.exports = {
     const animate = cfg.animate;
     const margin = cfg.margin;
     const hideAxes = cfg.hideAxes;
+    const hideBoundaries = cfg.hideBoundaries;
 
     const format = d3.format('.2');
     const aucFormat = d3.format('.4r');
@@ -219,5 +222,7 @@ module.exports = {
       svg.selectAll('.tick')
         .style('opacity', 0);
     }
+
+    if (!hideBoundaries) { drawBoundaries(chartArea, width, height); }
   }
 };

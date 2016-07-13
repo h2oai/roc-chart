@@ -10,7 +10,7 @@ export default function (svg, axes, height, width) {
       .text('False Positive Rate');
 
   const xAxisG = svg.select('g.x.axis');
-
+/*
   // draw the top boundary line
   xAxisG.append('line')
     .attr({
@@ -29,7 +29,7 @@ export default function (svg, axes, height, width) {
       y1: 0,
       y2: 0
     });
-
+*/
   // position the axis tick labels below the x-axis
   xAxisG.selectAll('.tick text')
     .attr('transform', `translate(0, ${25})`);
