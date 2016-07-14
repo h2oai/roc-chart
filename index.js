@@ -23,9 +23,10 @@ module.exports = {
         name: 'tpr0',
       }],
       animate: true,
-      hideTicks: false,
+      hideTicks: undefined,
       hideAxes: undefined,
-      hideBoundaries: undefined
+      hideBoundaries: undefined,
+      hideAUCText: undefined
     };
 
     // console.log('options passed to rocChart.plot', options);
@@ -57,6 +58,8 @@ module.exports = {
     const margin = cfg.margin;
     const hideAxes = cfg.hideAxes;
     const hideBoundaries = cfg.hideBoundaries;
+    const hideTicks = cfg.hideTicks;
+    const hideAUCText = cfg.hideAUCText;
 
     const format = d3.format('.2');
     const aucFormat = d3.format('.4r');
@@ -218,8 +221,14 @@ module.exports = {
         'z-index': 5070
       });
 
-    if (options.hideTicks) {
+    // if hideTicks is truthy, then hide the ticks
+    if (typeof hideTicks !== 'undefined') {
       svg.selectAll('.tick')
+        .style('opacity', 0);
+    }
+
+    if (typeof hideAUCText !== 'undefined') {
+      svg.selectAll('.AUCText')
         .style('opacity', 0);
     }
 

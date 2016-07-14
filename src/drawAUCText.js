@@ -4,6 +4,7 @@ export default function (svg, tpr, width, height, label, aucFormat, auc) {
     .style('opacity', 0)
     .attr('transform', `translate(${0.5 * width}, ${0.79 * height})`)
     .append('text')
+      .attr('class', 'AUCText')
       .text(label)
       .style({
         fill: 'white',
@@ -15,6 +16,7 @@ export default function (svg, tpr, width, height, label, aucFormat, auc) {
     .style('opacity', 0)
     .attr('transform', `translate(${0.5 * width}, ${0.84 * height})`)
     .append('text')
+      .attr('class', 'AUCText')
       .text(`AUC = ${aucFormat(auc)}`)
       .style({
         fill: 'white',
