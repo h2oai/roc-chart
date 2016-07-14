@@ -24,8 +24,8 @@ module.exports = {
       }],
       animate: true,
       hideTicks: false,
-      hideAxes: false,
-      hideBoundaries: false
+      hideAxes: undefined,
+      hideBoundaries: undefined
     };
 
     // console.log('options passed to rocChart.plot', options);
@@ -88,7 +88,7 @@ module.exports = {
     y.domain([0, 1]);
 
     // draw the axes if specified in the config
-    if (!hideAxes) {
+    if (typeof hideAxes === 'undefined') {
       drawAxes(svg, axes, height, width);
     }
     // draw the random guess line
@@ -223,6 +223,6 @@ module.exports = {
         .style('opacity', 0);
     }
 
-    if (!hideBoundaries) { drawBoundaries(chartArea, width, height); }
+    if (typeof hideBoundaries === 'undefined') { drawBoundaries(chartArea, width, height); }
   }
 };
