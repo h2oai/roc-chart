@@ -53,7 +53,6 @@ module.exports = {
     const interpolationMode = cfg.interpolationMode;
     const fpr = cfg.fpr;
     const animate = cfg.animate;
-    const margin = cfg.margin;
     const hideAxes = cfg.hideAxes;
     const hideBoundaries = cfg.hideBoundaries;
     const hideTicks = cfg.hideTicks;
@@ -62,6 +61,23 @@ module.exports = {
     // use these dimensions for the parent SVG
     const innerWidth = cfg.width;
     const innerHeight = cfg.height;
+    const margin = cfg.margin;
+
+    let svgWidth;
+    if (String(innerWidth).indexOf('%') > -1) {
+      svgWidth = innerWidth;
+    }
+    else {
+      svgWidth = innerWidth + margin.left + margin.right
+    }
+
+    let svgHeight;
+    if (String(innerHeight).indexOf('%') > -1) {
+      svgHeight = innerHeight;
+    }
+    else {
+      svgHeight = innerHeight + margin.top + margin.bottom
+    }
 
     // use these dimensions for everything else
     // and know that they will be SVG-scaled
@@ -89,8 +105,8 @@ module.exports = {
 
     const svg = d3.select(selector)
       .append('svg')
-        .attr('width', innerWidth + margin.left + margin.right)
-        .attr('height', innerHeight + margin.top + margin.bottom)
+        .attr('width', svgWidth)
+        .attr('height', svgHeight)
         .attr('viewBox', '0 0 100 100')
         .attr('preserveAspectRatio', 'xMinYMin meet');
 
