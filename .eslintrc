@@ -3,6 +3,7 @@
   "rules": {
     "comma-dangle": "off",
     "no-param-reassign": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    newline-per-chained-call: "off"
   }
 }
