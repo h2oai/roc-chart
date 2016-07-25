@@ -12,9 +12,9 @@ module.exports = {
   plot: function plot(selector, data, options) {
     // set default configuration
     const cfg = {
-      margin: { top: 30, right: 20, bottom: 70, left: 61 },
+      margin: { top: 60, right: 60, bottom: 60, left: 60 },
       width: 470,
-      height: 450,
+      height: 470,
       interpolationMode: 'basis',
       ticks: undefined,
       tickValues: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1],
@@ -52,14 +52,22 @@ module.exports = {
 
     const interpolationMode = cfg.interpolationMode;
     const fpr = cfg.fpr;
-    const width = cfg.width;
-    const height = cfg.height;
     const animate = cfg.animate;
     const margin = cfg.margin;
     const hideAxes = cfg.hideAxes;
     const hideBoundaries = cfg.hideBoundaries;
     const hideTicks = cfg.hideTicks;
     const hideAUCText = cfg.hideAUCText;
+
+    // use these dimensions for the parent SVG
+    const innerWidth = cfg.width;
+    const innerHeight = cfg.height;
+
+    // use these dimensions for everything else
+    // and know that they will be SVG-scaled
+    // since we set the viewBox attribute
+    const width = 100;
+    const height = 100;
 
     const format = d3.format('.2');
     const aucFormat = d3.format('.4r');
@@ -81,8 +89,10 @@ module.exports = {
 
     const svg = d3.select(selector)
       .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom);
+        .attr('width', innerWidth + margin.left + margin.right)
+        .attr('height', innerHeight + margin.top + margin.bottom)
+        .attr('viewBox', '0 0 100 100')
+        .attr('preserveAspectRatio', 'xMinYMin meet');
 
     const chartArea = svg.append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
