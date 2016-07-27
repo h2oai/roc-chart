@@ -1,6 +1,6 @@
 {
   "name": "roc-chart",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "a chart that plots receiver operating characteristic curves",
   "main": "build/bundle.js",
   "scripts": {
@@ -51,7 +51,8 @@
     "eslint-plugin-react": "^5.2.2",
     "package-preamble": "0.0",
     "rollup": "0.33",
-    "rollup-plugin-babel": "^2.6.1"
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-json": "^2.0.1"
   },
   "dependencies": {
     "d3": "^3.5.17"
