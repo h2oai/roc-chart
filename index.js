@@ -18,19 +18,12 @@ module.exports = {
       interpolationMode: 'basis',
       ticks: undefined,
       tickValues: [0, 0.1, 0.25, 0.5, 0.75, 0.9, 1],
-      fpr: 'fpr',
-      tprVariables: [{
-        name: 'tpr0',
-      }],
       animate: undefined,
       hideTicks: undefined,
       hideAxes: undefined,
       hideBoundaries: undefined,
       hideAUCText: undefined
     };
-
-    console.log('data', data);
-    // console.log('options passed to rocChart.plot', options);
 
     // Put all of the options into a variable called cfg
     if (typeof options !== 'undefined') {
@@ -39,20 +32,7 @@ module.exports = {
       }// for i
     }// if
 
-    // const tprVariables = cfg.tprVariables;
-    // // if values for labels are not specified
-    // // set the default values for the labels to the corresponding
-    // // true positive rate variable name
-    // tprVariables.forEach((d) => {
-    //   if (typeof d.label === 'undefined') {
-    //     d.label = d.name;
-    //   }
-    // });
-
-    // console.log('tprVariables', tprVariables);
-
     const interpolationMode = cfg.interpolationMode;
-    const fpr = cfg.fpr;
     const animate = cfg.animate;
     const hideAxes = cfg.hideAxes;
     const hideBoundaries = cfg.hideBoundaries;
@@ -67,17 +47,15 @@ module.exports = {
     let svgWidth;
     if (String(innerWidth).indexOf('%') > -1) {
       svgWidth = innerWidth;
-    }
-    else {
-      svgWidth = innerWidth + margin.left + margin.right
+    } else {
+      svgWidth = innerWidth + margin.left + margin.right;
     }
 
     let svgHeight;
     if (String(innerHeight).indexOf('%') > -1) {
       svgHeight = innerHeight;
-    }
-    else {
-      svgHeight = innerHeight + margin.top + margin.bottom
+    } else {
+      svgHeight = innerHeight + margin.top + margin.bottom;
     }
 
     // use these dimensions for everything else
@@ -154,10 +132,6 @@ module.exports = {
 
     // draw areas
     data.forEach((d, i) => {
-      // console.log('drawing the curve for', d.label)
-      // console.log('color(', i, ')', color(i));
-      // console.log('x scale', x);
-      // console.log('y scale', y);
       drawArea(d.values, chartArea, height, d.name, x, y, color(i));
     });
 
@@ -165,20 +139,18 @@ module.exports = {
     data.forEach((d, i) => {
       drawCurve(d.values, chartArea, d.name, color(i), x, y, areaID, interpolationMode);
       drawAUCText(chartArea, d.name, width, height, d.label, aucFormat, d.auc);
-    })
+    });
 
     //
     // animate through areas for each curve
     //
     if (typeof animate !== 'undefined') {
-      // get a list of tprVariables sorted ascending by AUC
+      // sort data ascending by AUC
       const dataAscByAUC = data
         .sort((a, b) => a.auc - b.auc);
 
-      // console.log('tprVariablesAscByAUC', tprVariablesAscByAUC);
       for (let k = 0; k < dataAscByAUC.length; k++) {
         areaID = `#${dataAscByAUC[k].name}Area`;
-        console.log('areaID', areaID);
         chartArea.select(areaID)
           .transition()
             .delay(2000 * (k + 1))
