@@ -137,8 +137,9 @@ module.exports = {
 
     // draw curves on top of areas to ensure that curve mouseover works
     data.forEach((d, i) => {
+      const label = d.label || d.name;
       drawCurve(d.values, chartArea, d.name, color(i), x, y, areaID, interpolationMode);
-      drawAUCText(chartArea, d.name, width, height, d.label, aucFormat, d.auc);
+      drawAUCText(chartArea, d.name, width, height, label, aucFormat, d.auc);
     });
 
     //
