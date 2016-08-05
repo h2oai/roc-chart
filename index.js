@@ -22,13 +22,14 @@ module.exports = {
       tprVariables: [{
         name: 'tpr0',
       }],
-      animate: true,
+      animate: undefined,
       hideTicks: undefined,
       hideAxes: undefined,
       hideBoundaries: undefined,
       hideAUCText: undefined
     };
 
+    console.log('data', data);
     // console.log('options passed to rocChart.plot', options);
 
     // Put all of the options into a variable called cfg
@@ -38,15 +39,15 @@ module.exports = {
       }// for i
     }// if
 
-    const tprVariables = cfg.tprVariables;
-    // if values for labels are not specified
-    // set the default values for the labels to the corresponding
-    // true positive rate variable name
-    tprVariables.forEach((d) => {
-      if (typeof d.label === 'undefined') {
-        d.label = d.name;
-      }
-    });
+    // const tprVariables = cfg.tprVariables;
+    // // if values for labels are not specified
+    // // set the default values for the labels to the corresponding
+    // // true positive rate variable name
+    // tprVariables.forEach((d) => {
+    //   if (typeof d.label === 'undefined') {
+    //     d.label = d.name;
+    //   }
+    // });
 
     // console.log('tprVariables', tprVariables);
 
@@ -142,38 +143,42 @@ module.exports = {
     let areaID;
 
     // calculate the area under each curve
-    tprVariables.forEach(d => {
-      const tpr = d.name;
-      const points = generatePoints(data, fpr, tpr);
+    data.forEach(d => {
+      const points = generatePoints(d.values, 'fpr', 'tpr');
       const auc = calculateArea(points);
       d.auc = auc;
     });
 
-    // console.log('tprVariables', tprVariables);
-
     // draw curves, areas, and text for each
     // true-positive rate in the data
-    tprVariables.forEach((d, i) => {
+
+    // draw areas
+    data.forEach((d, i) => {
       // console.log('drawing the curve for', d.label)
       // console.log('color(', i, ')', color(i));
       // console.log('x scale', x);
       // console.log('y scale', y);
-      const tpr = d.name;
-      drawArea(data, chartArea, height, tpr, fpr, x, y, color(i));
-      drawCurve(data, chartArea, tpr, fpr, color(i), x, y, areaID, interpolationMode);
-      drawAUCText(chartArea, tpr, width, height, d.label, aucFormat, d.auc);
+      drawArea(d.values, chartArea, height, d.name, x, y, color(i));
     });
+
+    // draw curves on top of areas to ensure that curve mouseover works
+    data.forEach((d, i) => {
+      drawCurve(d.values, chartArea, d.name, color(i), x, y, areaID, interpolationMode);
+      drawAUCText(chartArea, d.name, width, height, d.label, aucFormat, d.auc);
+    })
 
     //
     // animate through areas for each curve
     //
-    if (animate && animate !== 'false') {
-      // sort tprVariables ascending by AUC
-      const tprVariablesAscByAUC = tprVariables.sort((a, b) => a.auc - b.auc);
+    if (typeof animate !== 'undefined') {
+      // get a list of tprVariables sorted ascending by AUC
+      const dataAscByAUC = data
+        .sort((a, b) => a.auc - b.auc);
 
       // console.log('tprVariablesAscByAUC', tprVariablesAscByAUC);
-      for (let k = 0; k < tprVariablesAscByAUC.length; k++) {
-        areaID = `#${tprVariablesAscByAUC[k].name}Area`;
+      for (let k = 0; k < dataAscByAUC.length; k++) {
+        areaID = `#${dataAscByAUC[k].name}Area`;
+        console.log('areaID', areaID);
         chartArea.select(areaID)
           .transition()
             .delay(2000 * (k + 1))
@@ -184,7 +189,7 @@ module.exports = {
             .duration(250)
             .style('opacity', 0);
 
-        const textClass = `.${tprVariablesAscByAUC[k].name}text`;
+        const textClass = `.${dataAscByAUC[k].name}text`;
         chartArea.selectAll(textClass)
           .transition()
             .delay(2000 * (k + 1))
