@@ -64,7 +64,7 @@ Each object in this nested array contains a true positive rate `tpr` key value p
 
 pass an options object containing the values for these propteries to configure the ROC Chart:
 
-** curveColors ** an array of strings containing CSS color names or color hex codes. the values in this array are used to set the stroke color of each ROC curve.
+**curveColors** an array of strings containing CSS color names or color hex codes. the values in this array are used to set the stroke color of each ROC curve.
 
 `'curveColors': ['blue', 'orange', 'steelblue', 'red', 'green', 'purple']`
 
