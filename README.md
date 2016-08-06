@@ -1,9 +1,6 @@
 ## roc-chart
 
-the #d3js bl.ock [Animated ROC Chart](http://bl.ocks.org/micahstubbs/f2aff83148a5f64f3222) packaged up as an node module.
-
-the `data` parameter to `rocChart.plot()` should be an array of objects.  
-`TODO: describe properties expected on each object in the data array`  
+the #d3js bl.ock [Animated ROC Chart](http://bl.ocks.org/micahstubbs/f2aff83148a5f64f3222) packaged up as an node module. 
 
 #### example  
 
@@ -23,7 +20,7 @@ import rocChart from 'rocChart';
 export function drawROCChart() {
   const data = // TODO: add example data
    
-  rocChart.plot('body', data);
+  rocChart.plot('body', data, options);
 }
 ```
 
@@ -62,3 +59,13 @@ Each object in this nested array contains a true positive rate `tpr` key value p
       }
       // ...
 ```
+
+#### options
+
+pass an options object containing the values for these propteries to configure the ROC Chart:
+
+** curveColors ** an array of strings containing CSS color names or color hex codes. the values in this array are used to set the stroke color of each ROC curve.
+
+`'curveColors': ['blue', 'orange', 'steelblue', 'red', 'green', 'purple']`
+
+`TODO: document remaining options`

@@ -22,7 +22,8 @@ module.exports = {
       hideTicks: undefined,
       hideAxes: undefined,
       hideBoundaries: undefined,
-      hideAUCText: undefined
+      hideAUCText: undefined,
+      curveColors: undefined
     };
 
     // Put all of the options into a variable called cfg
@@ -38,6 +39,7 @@ module.exports = {
     const hideBoundaries = cfg.hideBoundaries;
     const hideTicks = cfg.hideTicks;
     const hideAUCText = cfg.hideAUCText;
+    const curveColors = cfg.curveColors;
 
     // use these dimensions for the parent SVG
     const innerWidth = cfg.width;
@@ -73,8 +75,13 @@ module.exports = {
     const y = d3.scale.linear()
       .range([height, 0]);
 
-    const color = d3.scale.category10();
-    // const color = d3.scale.ordinal().range(['steelblue', 'red', 'green', 'purple']);
+    let color;
+    if (typeof curveColors !== 'undefined') {
+      color = d3.scale.ordinal().range(curveColors);
+    } else {
+      color = d3.scale.category10();
+      // color = d3.scale.ordinal().range(['steelblue', 'red', 'green', 'purple']);
+    }
 
     // prepare the axes if specified in the config
     let axes;
