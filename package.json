@@ -1,6 +1,6 @@
 {
   "name": "roc-chart",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a chart that plots receiver operating characteristic curves",
   "main": "build/bundle.js",
   "scripts": {
@@ -35,7 +35,7 @@
       "email": "micah.stubbs@gmail.com"
     }
   ],
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/h2oai/vis-components/issues"
   },
