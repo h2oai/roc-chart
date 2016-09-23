@@ -13,9 +13,6 @@
     "url": "git+https://github.com/h2oai/vis-components.git"
   },
   "homepage": "https://github.com/h2oai/vis-components#readme",
-  "publishConfig": {
-    "registry": "http://172.17.0.53:8081/nexus/content/repositories/npm-internal/"
-  },
   "keywords": [
     "roc",
     "accuracy",
