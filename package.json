@@ -47,7 +47,7 @@
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.2.2",
     "package-preamble": "0.0",
-    "rollup": "0.33",
+    "rollup": "4.24",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-json": "^2.0.1"
   },
